@@ -17,7 +17,7 @@ prop_lengthMultipleOf4 s =
 
 prop_endsWithPadding b =
   collect r
-    $ suffix `BS.isSuffixOf` (encode b)
+    $ suffix `BS.isSuffixOf` encode b
  where
   r = fromIntegral $ BL.length b `rem` 3
   suffix = BS.replicate
