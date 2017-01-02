@@ -15,6 +15,8 @@ cabal-version:       >=1.10
 library
   exposed-modules:     Codec.Binary.Base64
   build-depends:       base >=4.9 && < 5
+                     , binary
+                     , binary-bits
                      , bytestring
   hs-source-dirs:      src
   ghc-options:         -Wall

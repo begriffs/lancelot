@@ -9,6 +9,7 @@ import Test.QuickCheck.Property
 import Data.Char (ord)
 import qualified Data.Set as S
 import qualified Data.ByteString as BS
+import qualified Data.ByteString.Lazy as BL
 import Codec.Binary.Base64 (encode)
 
 prop_lengthMultipleOf4 s =
@@ -18,7 +19,7 @@ prop_endsWithPadding b =
   collect r
     $ suffix `BS.isSuffixOf` (encode b)
  where
-  r = BS.length b `rem` 3
+  r = fromIntegral $ BL.length b `rem` 3
   suffix = BS.replicate
     ((3 - r) `rem` 3)
     (fromIntegral $ ord '=')
