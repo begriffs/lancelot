@@ -37,3 +37,4 @@ test-suite test
                      , lancelot
                      , QuickCheck
                      , quickcheck-instances
+                     , regex-posix

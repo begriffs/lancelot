@@ -5,10 +5,11 @@ import Control.Monad
 import qualified Data.Binary.Get as BY
 import qualified Data.Binary.Bits.Get as BI
 import Data.Bits (shiftL)
-import qualified Data.ByteString as BL
+import qualified Data.ByteString.Lazy as BL
 import Data.Monoid ((<>))
 import Data.Word
 
+encode :: BL.ByteString -> BL.ByteString
 encode =
   BY.runGet getB64
  where
