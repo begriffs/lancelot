@@ -3,6 +3,8 @@
 module TestBase64 where
 
 import Test.QuickCheck.All
+import Test.QuickCheck.Arbitrary
+import Test.QuickCheck.Gen (Gen, scale)
 import Test.QuickCheck.Instances ()
 import Test.QuickCheck.Property
 
@@ -24,13 +26,13 @@ prop_endsWithPadding b =
     ((3 - r) `rem` 3)
     (fromIntegral $ ord '=')
 
-prop_outputAlphabet b =
-  collect (S.size used)
-    $ used `S.isSubsetOf` allowed
- where
-  used = S.fromList . BS.unpack $ encode b
-  allowed = S.fromList . map (fromIntegral . ord) $
-    ['A'..'Z'] ++ ['a'..'z'] ++ ['0'..'9'] ++ ['+','/']
+prop_outputAlphabet =
+  forAll (scale (*3) (arbitrary :: Gen BL.ByteString)) $ \b ->
+    let used = S.fromList . BS.unpack $ encode b
+        allowed = S.fromList . map (fromIntegral . ord) $
+          ['A'..'Z'] ++ ['a'..'z'] ++ ['0'..'9'] ++ ['+','/'] in
+    cover (S.size used == 63) 1 "full-alphabet"
+      $ used `S.isSubsetOf` allowed
 
 ----------------------------------------------------------------------
 return []
