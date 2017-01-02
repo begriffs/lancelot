@@ -30,7 +30,7 @@ prop_outputAlphabet =
   forAll (scale (*3) (arbitrary :: Gen BL.ByteString)) $ \b ->
     let used = S.fromList . BS.unpack $ encode b
         allowed = S.fromList . map (fromIntegral . ord) $
-          ['A'..'Z'] ++ ['a'..'z'] ++ ['0'..'9'] ++ ['+','/'] in
+          ['A'..'Z'] ++ ['a'..'z'] ++ ['0'..'9'] ++ ['+','/','='] in
     cover (S.size used == 63) 1 "full-alphabet"
       $ used `S.isSubsetOf` allowed
 
